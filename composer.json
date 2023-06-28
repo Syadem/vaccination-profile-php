@@ -1,0 +1,17 @@
+{
+  "name": "syadem/vaccination-profile",
+  "description": "Nomenclature of vaccination profile conditions",
+  "type": "library",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Syadem\\Nuva\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Syadem"
+    }
+  ]
+}
