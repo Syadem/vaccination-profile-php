@@ -1004,35 +1004,35 @@ class ConditionGroup {
 class Condition {
     public ?TranslatedField $childLabel; // json:child_label Optional
     public string $code; // json:code Required
-    public ?ConditionType $conditionType; // json:condition_type Optional
     public ?TranslatedField $femaleLabel; // json:female_label Optional
     public ?TranslatedField $help; // json:help Optional
     public string $id; // json:id Required
     public TranslatedField $label; // json:label Required
     public ?TranslatedField $maleLabel; // json:male_label Optional
     public ?TranslatedField $professionalLabel; // json:professional_label Optional
+    public ?Type $type; // json:type Optional
 
     /**
      * @param TranslatedField|null $childLabel
      * @param string $code
-     * @param ConditionType|null $conditionType
      * @param TranslatedField|null $femaleLabel
      * @param TranslatedField|null $help
      * @param string $id
      * @param TranslatedField $label
      * @param TranslatedField|null $maleLabel
      * @param TranslatedField|null $professionalLabel
+     * @param Type|null $type
      */
-    public function __construct(?TranslatedField $childLabel, string $code, ?ConditionType $conditionType, ?TranslatedField $femaleLabel, ?TranslatedField $help, string $id, TranslatedField $label, ?TranslatedField $maleLabel, ?TranslatedField $professionalLabel) {
+    public function __construct(?TranslatedField $childLabel, string $code, ?TranslatedField $femaleLabel, ?TranslatedField $help, string $id, TranslatedField $label, ?TranslatedField $maleLabel, ?TranslatedField $professionalLabel, ?Type $type) {
         $this->childLabel = $childLabel;
         $this->code = $code;
-        $this->conditionType = $conditionType;
         $this->femaleLabel = $femaleLabel;
         $this->help = $help;
         $this->id = $id;
         $this->label = $label;
         $this->maleLabel = $maleLabel;
         $this->professionalLabel = $professionalLabel;
+        $this->type = $type;
     }
 
     /**
@@ -1103,46 +1103,6 @@ class Condition {
     public static function validateCode(string $value): bool {
         if (!is_string($value)) {
             throw new Exception("Attribute Error:Condition::code");
-        }
-        return true;
-    }
-
-    /**
-     * @param ?string $value
-     * @throws Exception
-     * @return ?ConditionType
-     */
-    public static function fromConditionType(?string $value): ?ConditionType {
-        if (!is_null($value)) {
-            return ConditionType::from($value); /*enum*/
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @throws Exception
-     * @return ?string
-     */
-    public function toConditionType(): ?string {
-        if (Condition::validateConditionType($this->conditionType))  {
-            if (!is_null($this->conditionType)) {
-                return ConditionType::to($this->conditionType); /*enum*/
-            } else {
-                return  null;
-            }
-        }
-        throw new Exception('never get to this Condition::conditionType');
-    }
-
-    /**
-     * @param ConditionType|null
-     * @return bool
-     * @throws Exception
-     */
-    public static function validateConditionType(?ConditionType $value): bool {
-        if (!is_null($value)) {
-            ConditionType::to($value);
         }
         return true;
     }
@@ -1370,19 +1330,59 @@ class Condition {
     }
 
     /**
+     * @param ?string $value
+     * @throws Exception
+     * @return ?Type
+     */
+    public static function fromType(?string $value): ?Type {
+        if (!is_null($value)) {
+            return Type::from($value); /*enum*/
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @throws Exception
+     * @return ?string
+     */
+    public function toType(): ?string {
+        if (Condition::validateType($this->type))  {
+            if (!is_null($this->type)) {
+                return Type::to($this->type); /*enum*/
+            } else {
+                return  null;
+            }
+        }
+        throw new Exception('never get to this Condition::type');
+    }
+
+    /**
+     * @param Type|null
+     * @return bool
+     * @throws Exception
+     */
+    public static function validateType(?Type $value): bool {
+        if (!is_null($value)) {
+            Type::to($value);
+        }
+        return true;
+    }
+
+    /**
      * @throws Exception
      * @return bool
      */
     public function validate(): bool {
         return Condition::validateChildLabel($this->childLabel)
         || Condition::validateCode($this->code)
-        || Condition::validateConditionType($this->conditionType)
         || Condition::validateFemaleLabel($this->femaleLabel)
         || Condition::validateHelp($this->help)
         || Condition::validateID($this->id)
         || Condition::validateLabel($this->label)
         || Condition::validateMaleLabel($this->maleLabel)
-        || Condition::validateProfessionalLabel($this->professionalLabel);
+        || Condition::validateProfessionalLabel($this->professionalLabel)
+        || Condition::validateType($this->type);
     }
 
     /**
@@ -1393,13 +1393,13 @@ class Condition {
         $out = new \stdClass();
         $out->{'child_label'} = $this->toChildLabel();
         $out->{'code'} = $this->toCode();
-        $out->{'condition_type'} = $this->toConditionType();
         $out->{'female_label'} = $this->toFemaleLabel();
         $out->{'help'} = $this->toHelp();
         $out->{'id'} = $this->toID();
         $out->{'label'} = $this->toLabel();
         $out->{'male_label'} = $this->toMaleLabel();
         $out->{'professional_label'} = $this->toProfessionalLabel();
+        $out->{'type'} = $this->toType();
         return $out;
     }
 
@@ -1412,13 +1412,13 @@ class Condition {
         return new Condition(
          Condition::fromChildLabel($obj->{'child_label'} ?? null)
         ,Condition::fromCode($obj->{'code'} ?? null)
-        ,Condition::fromConditionType($obj->{'condition_type'} ?? null)
         ,Condition::fromFemaleLabel($obj->{'female_label'} ?? null)
         ,Condition::fromHelp($obj->{'help'} ?? null)
         ,Condition::fromID($obj->{'id'} ?? null)
         ,Condition::fromLabel($obj->{'label'} ?? null)
         ,Condition::fromMaleLabel($obj->{'male_label'} ?? null)
         ,Condition::fromProfessionalLabel($obj->{'professional_label'} ?? null)
+        ,Condition::fromType($obj->{'type'} ?? null)
         );
     }
 
@@ -1429,29 +1429,29 @@ class Condition {
         return new Condition(
          Condition::sampleChildLabel()
         ,Condition::sampleCode()
-        ,Condition::sampleConditionType()
         ,Condition::sampleFemaleLabel()
         ,Condition::sampleHelp()
         ,Condition::sampleID()
         ,Condition::sampleLabel()
         ,Condition::sampleMaleLabel()
         ,Condition::sampleProfessionalLabel()
+        ,Condition::sampleType()
         );
     }
 }
 
-// This is a autogenerated file:ConditionType
+// This is a autogenerated file:Type
 
-class ConditionType {
-    public static ConditionType $BOOLEAN;
-    public static ConditionType $DATE;
-    public static ConditionType $FLOAT;
-    public static ConditionType $INTEGER;
+class Type {
+    public static Type $BOOLEAN;
+    public static Type $DATE;
+    public static Type $FLOAT;
+    public static Type $INTEGER;
     public static function init() {
-        ConditionType::$BOOLEAN = new ConditionType('boolean');
-        ConditionType::$DATE = new ConditionType('date');
-        ConditionType::$FLOAT = new ConditionType('float');
-        ConditionType::$INTEGER = new ConditionType('integer');
+        Type::$BOOLEAN = new Type('boolean');
+        Type::$DATE = new Type('date');
+        Type::$FLOAT = new Type('float');
+        Type::$INTEGER = new Type('integer');
     }
     private string $enum;
     public function __construct(string $enum) {
@@ -1459,43 +1459,43 @@ class ConditionType {
     }
 
     /**
-     * @param ConditionType
+     * @param Type
      * @return string
      * @throws Exception
      */
-    public static function to(ConditionType $obj): string {
+    public static function to(Type $obj): string {
         switch ($obj->enum) {
-            case ConditionType::$BOOLEAN->enum: return 'boolean';
-            case ConditionType::$DATE->enum: return 'date';
-            case ConditionType::$FLOAT->enum: return 'float';
-            case ConditionType::$INTEGER->enum: return 'integer';
+            case Type::$BOOLEAN->enum: return 'boolean';
+            case Type::$DATE->enum: return 'date';
+            case Type::$FLOAT->enum: return 'float';
+            case Type::$INTEGER->enum: return 'integer';
         }
         throw new Exception('the give value is not an enum-value.');
     }
 
     /**
      * @param mixed
-     * @return ConditionType
+     * @return Type
      * @throws Exception
      */
-    public static function from($obj): ConditionType {
+    public static function from($obj): Type {
         switch ($obj) {
-            case 'boolean': return ConditionType::$BOOLEAN;
-            case 'date': return ConditionType::$DATE;
-            case 'float': return ConditionType::$FLOAT;
-            case 'integer': return ConditionType::$INTEGER;
+            case 'boolean': return Type::$BOOLEAN;
+            case 'date': return Type::$DATE;
+            case 'float': return Type::$FLOAT;
+            case 'integer': return Type::$INTEGER;
         }
-        throw new Exception("Cannot deserialize ConditionType");
+        throw new Exception("Cannot deserialize Type");
     }
 
     /**
-     * @return ConditionType
+     * @return Type
      */
-    public static function sample(): ConditionType {
-        return ConditionType::$BOOLEAN;
+    public static function sample(): Type {
+        return Type::$BOOLEAN;
     }
 }
-ConditionType::init();
+Type::init();
 
 // This is a autogenerated file:Document
 
