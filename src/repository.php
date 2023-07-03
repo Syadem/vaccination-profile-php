@@ -8,7 +8,7 @@ class Repository {
   {
     $this->data = array();
     foreach($data as &$value) {
-      $this->data[$value->id] = $value;
+      $this->data[$value->getId()] = $value;
     }
   }
 
