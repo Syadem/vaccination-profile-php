@@ -2,12 +2,10 @@
   "name": "syadem/vaccination-profile",
   "description": "Nomenclature of vaccination profile conditions",
   "type": "library",
-  "require": {
-  },
+  "license": "MIT",
+  "require": {},
   "autoload": {
-    "psr-4": {
-      "Syadem\\VaccinationProfile\\": "src/"
-    }
+    "classmap": ["src/"]
   },
   "authors": [
     {
