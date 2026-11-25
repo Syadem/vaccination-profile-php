@@ -2,9 +2,10 @@
 
 ## Installation
 
-The package is published on [Packagist](https://packagist.org/packages/syadem/vaccination-profile). Install it with [Composer](https://getcomposer.org/):
+Declare this repository in your `composer.json`, then install the package with [Composer](https://getcomposer.org/):
 
 ```bash
+composer config repositories.syadem-vaccination-profile git https://github.com/Syadem/vaccination-profile-php.git
 composer require syadem/vaccination-profile
 ```
 
